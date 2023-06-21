@@ -2,6 +2,19 @@
 
 Simple [Golang](https://go.dev) implementation of [TicTacToe](https://en.wikipedia.org/wiki/tic-tac-toe#gameplay).
 
+## Exposed Constants
+```golang
+// Player may be X or O
+const (
+    X Player = "X"
+    O Player = "O"
+)
+```
+```golang
+// BoardSize defines the length and width of the board
+const BoardSize = 3
+```
+
 ## Exposed Methods
 
 ```golang
