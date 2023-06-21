@@ -2,20 +2,20 @@ package tictactoe
 
 import "fmt"
 
-type Team string
+type Player string
 
 const (
-	X Team = "X"
-	O Team = "O"
+	X Player = "X"
+	O Player = "O"
 
 	BoardSize = 3
 )
 
 // TicTacToe - https://en.wikipedia.org/wiki/tic-tac-toe#gameplay
 type TicTacToe struct {
-	turn   Team
-	winner *Team
-	board  [BoardSize][BoardSize]*Team
+	turn   Player
+	winner *Player
+	board  [BoardSize][BoardSize]*Player
 }
 
 // NewTicTacToe creates a new instance of a TicTacToe game
@@ -23,25 +23,25 @@ func NewTicTacToe() TicTacToe {
 	return TicTacToe{
 		turn:   X,
 		winner: nil,
-		board:  [BoardSize][BoardSize]*Team{},
+		board:  [BoardSize][BoardSize]*Player{},
 	}
 }
 
-// MarkLocation places the Team's symbol in the given row and column
-func (t *TicTacToe) MarkLocation(team Team, row, column int) error {
+// Move places the player's symbol in the given row and column and errors if move is invalid
+func (t *TicTacToe) Move(player Player, row, column int) error {
 	if t.winner != nil {
 		return fmt.Errorf("tictactoe: game is already over")
 	}
-	if team != t.turn {
-		return fmt.Errorf("tictactoe: not %s's turn", team)
+	if player != t.turn {
+		return fmt.Errorf("tictactoe: not %s's turn", player)
 	}
 	if row < 0 || row >= BoardSize || column < 0 || column >= BoardSize {
 		return fmt.Errorf("tictactoe: row and/or column is out of bounds")
 	}
 	if t.board[row][column] != nil {
-		return fmt.Errorf("tictactoe: location to mark is not empty")
+		return fmt.Errorf("tictactoe: location %d,%d is not empty", row, column)
 	}
-	t.board[row][column] = &team
+	t.board[row][column] = &player
 	t.winner = getWinner(t.board)
 	if t.winner == nil {
 		t.turn = getNextTurn(t.turn)
@@ -50,22 +50,22 @@ func (t *TicTacToe) MarkLocation(team Team, row, column int) error {
 }
 
 // GetTurn returns the turn of the TicTacToe game
-func (t *TicTacToe) GetTurn(team Team, row, col int) Team {
+func (t *TicTacToe) GetTurn(player Player, row, col int) Player {
 	return t.turn
 }
 
 // GetWinner returns the winner of the TicTacToe game
-func (t *TicTacToe) GetWinner(team Team, row, col int) *Team {
+func (t *TicTacToe) GetWinner(player Player, row, col int) *Player {
 	return t.winner
 }
 
 // GetBoard returns the TicTacToe board
-func (t *TicTacToe) GetBoard(team Team, row, col int) [BoardSize][BoardSize]*Team {
+func (t *TicTacToe) GetBoard(player Player, row, col int) [BoardSize][BoardSize]*Player {
 	return t.board
 }
 
 // getWinner checks rows, columns, and diagonals for three in a row and returns a pointer to team or nil
-func getWinner(board [BoardSize][BoardSize]*Team) *Team {
+func getWinner(board [BoardSize][BoardSize]*Player) *Player {
 	for i := 0; i < BoardSize; i++ {
 		if board[i][0] != nil && board[i][1] != nil && board[i][2] != nil &&
 			*board[i][0] == *board[i][1] && *board[i][1] == *board[i][2] {
@@ -88,7 +88,7 @@ func getWinner(board [BoardSize][BoardSize]*Team) *Team {
 }
 
 // getNextTurn returns the opposite of currentTurn
-func getNextTurn(currentTurn Team) Team {
+func getNextTurn(currentTurn Player) Player {
 	if currentTurn == X {
 		return O
 	}
