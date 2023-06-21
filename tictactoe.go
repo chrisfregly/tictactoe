@@ -50,17 +50,17 @@ func (t *TicTacToe) Move(player Player, row, column int) error {
 }
 
 // GetTurn returns the turn of the TicTacToe game
-func (t *TicTacToe) GetTurn(player Player, row, col int) Player {
+func (t *TicTacToe) GetTurn() Player {
 	return t.turn
 }
 
 // GetWinner returns the winner of the TicTacToe game
-func (t *TicTacToe) GetWinner(player Player, row, col int) *Player {
+func (t *TicTacToe) GetWinner() *Player {
 	return t.winner
 }
 
 // GetBoard returns the TicTacToe board
-func (t *TicTacToe) GetBoard(player Player, row, col int) [BoardSize][BoardSize]*Player {
+func (t *TicTacToe) GetBoard() [BoardSize][BoardSize]*Player {
 	return t.board
 }
 
