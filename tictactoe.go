@@ -100,6 +100,7 @@ func getNextTurn(currentTurn Player) Player {
 	return X
 }
 
+// isBoardFull returns whether or not the board is full
 func isBoardFull(board [BoardSize][BoardSize]*Player) bool {
 	for _, row := range board {
 		for _, player := range row {
