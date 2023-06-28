@@ -37,3 +37,7 @@ func (t *TicTacToe) GetWinner() *Player
 // GetBoard returns the TicTacToe board
 func (t *TicTacToe) GetBoard() [BoardSize][BoardSize]*Player
 ```
+```golang
+// IsGameOver returns whether or not the game is over
+func (t *TicTacToe) IsGameOver() bool
+```

@@ -29,7 +29,7 @@ func NewTicTacToe() TicTacToe {
 
 // Move places the player's symbol in the given row and column and errors if move is invalid
 func (t *TicTacToe) Move(player Player, row, column int) error {
-	if t.winner != nil {
+	if t.IsGameOver() {
 		return fmt.Errorf("tictactoe: game is already over")
 	}
 	if player != t.turn {
@@ -64,6 +64,11 @@ func (t *TicTacToe) GetBoard() [BoardSize][BoardSize]*Player {
 	return t.board
 }
 
+// IsGameOver returns whether or not the game is over
+func (t *TicTacToe) IsGameOver() bool {
+	return t.winner != nil || isBoardFull(t.board)
+}
+
 // getWinner checks rows, columns, and diagonals for three in a row and returns a pointer to team or nil
 func getWinner(board [BoardSize][BoardSize]*Player) *Player {
 	for i := 0; i < BoardSize; i++ {
@@ -93,4 +98,15 @@ func getNextTurn(currentTurn Player) Player {
 		return O
 	}
 	return X
+}
+
+func isBoardFull(board [BoardSize][BoardSize]*Player) bool {
+	for _, row := range board {
+		for _, player := range row {
+			if player == nil {
+				return false
+			}
+		}
+	}
+	return true
 }
