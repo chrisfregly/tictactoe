@@ -43,7 +43,7 @@ func (t *TicTacToe) Move(player Player, row, column int) error {
 	}
 	t.board[row][column] = &player
 	t.winner = getWinner(t.board)
-	if t.winner == nil {
+	if !t.IsGameOver() {
 		t.turn = getNextTurn(t.turn)
 	}
 	return nil
